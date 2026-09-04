@@ -249,6 +249,55 @@ def test_keeps_nested_layout_when_cleanup_disabled(tmp_path):
     assert os.path.exists(os.path.join(str(out), SIX_STEM_MODEL))
 
 
+# ------------------------------------------------------------ real path helpers
+
+def test_config_helpers_contain_job_traversal():
+    """The router monkeypatches these; the shipped ones must contain too.
+
+    The property is that a path outside the root is never RETURNED. Two
+    outcomes satisfy it: separators sanitise to a flat name inside the root
+    (``../../etc`` -> ``.._.._etc``), or the realpath check rejects the id
+    outright and raises. ``..`` takes the second route — dots survive the
+    character filter, exactly as in ``dub_seg_path`` — and the routes turn that
+    ValueError into a 400.
+    """
+    from core.config import STEMS_DIR, stem_job_dir
+
+    root = os.path.realpath(STEMS_DIR)
+    for evil in ["../../etc", "..", "/etc/passwd", "a/../../b"]:
+        try:
+            got = stem_job_dir(evil)
+        except ValueError:
+            continue  # rejected outright — contained
+        assert got == root or got.startswith(root + os.sep), f"{evil!r} escaped to {got}"
+
+
+def test_dotdot_job_id_is_rejected_not_resolved():
+    """Pins the raise, so a future sanitiser change cannot silently return the parent."""
+    from core.config import stem_job_dir
+
+    with pytest.raises(ValueError, match="escapes STEMS_DIR"):
+        stem_job_dir("..")
+
+
+def test_config_helpers_contain_stem_traversal():
+    from core.config import STEMS_DIR, stem_file_path
+
+    root = os.path.realpath(STEMS_DIR)
+    for evil in ["../../passwd", "../source", "/etc/shadow"]:
+        try:
+            got = stem_file_path("job1", evil)
+        except ValueError:
+            continue
+        assert got.startswith(root + os.sep), f"{evil!r} escaped to {got}"
+
+
+def test_config_helper_round_trips_a_real_stem_name():
+    from core.config import stem_file_path, stem_job_dir
+
+    assert stem_file_path("job1", "vocals") == os.path.join(stem_job_dir("job1"), "vocals.wav")
+
+
 # ------------------------------------------------------- dub pipeline untouched
 
 def test_dub_pipeline_still_requests_two_stems():
