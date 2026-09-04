@@ -29,7 +29,8 @@
     "flip_rail": "Schienenseite umdrehen",
     "voice": "Stimme",
     "audiobook": "Hörbuch",
-    "workspaces": "Arbeitsbereiche"
+    "workspaces": "Arbeitsbereiche",
+    "stems": "Stems"
   },
   "catalogue": {
     "title": "Modellkatalog",

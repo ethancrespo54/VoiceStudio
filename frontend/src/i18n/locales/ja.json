@@ -29,7 +29,8 @@
     "flip_rail": "レール側を反転",
     "voice": "声",
     "audiobook": "オーディオブック",
-    "workspaces": "ワークスペース"
+    "workspaces": "ワークスペース",
+    "stems": "ステム"
   },
   "catalogue": {
     "title": "モデルカタログ",

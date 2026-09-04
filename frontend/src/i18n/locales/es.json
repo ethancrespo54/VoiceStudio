@@ -29,7 +29,8 @@
     "flip_rail": "Lado del riel abatible",
     "voice": "Voz",
     "audiobook": "Audiolibro",
-    "workspaces": "Espacios de trabajo"
+    "workspaces": "Espacios de trabajo",
+    "stems": "Pistas"
   },
   "catalogue": {
     "title": "Catálogo de modelos",

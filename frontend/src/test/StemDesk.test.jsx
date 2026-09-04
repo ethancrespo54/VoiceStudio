@@ -188,3 +188,41 @@ describe('StemChannelStrip', () => {
     expect(screen.getByText('Guitar')).toBeInTheDocument();
   });
 });
+
+// The rail and the titlebar tab strip are two skins of NAV_ITEMS, so a
+// workspace that is missing from that list is unreachable in BOTH. These pin
+// the three things that have to agree for the entry to work: the list carries
+// it, its id is the mode App.jsx branches on, and its label resolves in every
+// locale rather than rendering as a bare key.
+describe('stem desk navigation', () => {
+  it('appears in the shared workspace list', async () => {
+    const { NAV_ITEMS } = await import('../components/navItems');
+    const entry = NAV_ITEMS.find((i) => i.id === 'stems');
+    expect(entry).toBeDefined();
+    expect(entry.Icon).toBeTruthy();
+  });
+
+  it('sits next to Dub, the other workspace that starts from an existing track', async () => {
+    const { NAV_ITEMS } = await import('../components/navItems');
+    const ids = NAV_ITEMS.map((i) => i.id);
+    expect(ids.indexOf('stems')).toBe(ids.indexOf('dub') + 1);
+  });
+
+  it('uses an accent no other workspace has taken', async () => {
+    const { NAV_ITEMS } = await import('../components/navItems');
+    const entry = NAV_ITEMS.find((i) => i.id === 'stems');
+    const others = NAV_ITEMS.filter((i) => i.id !== 'stems').map((i) => i.accent);
+    expect(others).not.toContain(entry.accent);
+  });
+
+  it('has a nav label in every locale, not a bare key', async () => {
+    const modules = import.meta.glob('../i18n/locales/*.json', { eager: true });
+    const entries = Object.entries(modules);
+    expect(entries).toHaveLength(21);
+    for (const [path, mod] of entries) {
+      const label = (mod.default ?? mod).nav?.stems;
+      expect(label, `${path} is missing nav.stems`).toBeTruthy();
+      expect(label, `${path} nav.stems looks like a key`).not.toMatch(/^nav\./);
+    }
+  });
+});

@@ -29,7 +29,8 @@
     "flip_rail": "翻轉導軌側",
     "voice": "語音",
     "audiobook": "有聲書",
-    "workspaces": "工作區"
+    "workspaces": "工作區",
+    "stems": "分軌"
   },
   "catalogue": {
     "title": "模型庫",

@@ -29,7 +29,8 @@
     "flip_rail": "Balik sisi rel",
     "voice": "Suara",
     "audiobook": "Buku Audio",
-    "workspaces": "Ruang kerja"
+    "workspaces": "Ruang kerja",
+    "stems": "Stem"
   },
   "catalogue": {
     "title": "Katalog model",

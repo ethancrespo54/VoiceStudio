@@ -139,7 +139,8 @@
     "flip_rail": "切换轨道侧",
     "voice": "语音",
     "audiobook": "有声读物",
-    "workspaces": "工作区"
+    "workspaces": "工作区",
+    "stems": "分轨"
   },
   "catalogue": {
     "title": "模型库",

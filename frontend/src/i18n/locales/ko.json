@@ -29,7 +29,8 @@
     "flip_rail": "레일 측면 뒤집기",
     "voice": "음성",
     "audiobook": "오디오북",
-    "workspaces": "작업 공간"
+    "workspaces": "작업 공간",
+    "stems": "스템"
   },
   "catalogue": {
     "title": "모델 카탈로그",

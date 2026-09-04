@@ -29,7 +29,8 @@
     "flip_rail": "Mặt đường ray lật",
     "voice": "Giọng nói",
     "audiobook": "Sách nói",
-    "workspaces": "Không gian làm việc"
+    "workspaces": "Không gian làm việc",
+    "stems": "Stem"
   },
   "catalogue": {
     "title": "Danh mục mô hình",

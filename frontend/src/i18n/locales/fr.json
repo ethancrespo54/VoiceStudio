@@ -29,7 +29,8 @@
     "flip_rail": "Côté rail rabattable",
     "voice": "Voix",
     "audiobook": "Livre audio",
-    "workspaces": "Espaces de travail"
+    "workspaces": "Espaces de travail",
+    "stems": "Pistes"
   },
   "catalogue": {
     "title": "Catalogue de modèles",

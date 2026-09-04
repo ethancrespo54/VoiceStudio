@@ -165,7 +165,8 @@
     "move_rail_right": "Move rail to the right",
     "move_rail_left": "Move rail to the left",
     "flip_rail": "Flip rail side",
-    "workspaces": "Workspaces"
+    "workspaces": "Workspaces",
+    "stems": "Stems"
   },
   "catalogue": {
     "title": "Model Catalogue",
