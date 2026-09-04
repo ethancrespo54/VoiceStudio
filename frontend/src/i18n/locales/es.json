@@ -2732,5 +2732,37 @@
     "transcript": "Lo que se oyó",
     "result_kicker": "Toma convertida",
     "need_source_and_voice": "Añade primero un clip de origen y elige una voz de destino."
+  },
+  "stems": {
+    "title": "Mesa de pistas",
+    "source_title": "Pista original",
+    "source_hint": "Elige un archivo de audio local para dividirlo en seis pistas de instrumentos.",
+    "choose_file": "Elegir archivo",
+    "separating": "Separando… {{percent}} %",
+    "separating_note": "La separación se ejecuta en este equipo y puede tardar varios minutos.",
+    "separation_failed": "Error en la separación",
+    "desk_title": "Mezcla",
+    "desk_hint": "Ajusta cada instrumento por separado. Solo aísla una pista; silenciar la apaga.",
+    "play": "Reproducir",
+    "pause": "Pausa",
+    "stop": "Detener",
+    "seek": "Buscar",
+    "clear_solo": "Quitar solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Silenciar {{stem}}",
+    "solo_stem": "Solo de {{stem}}",
+    "level_for": "Nivel de {{stem}}",
+    "uneven_warning": "Las pistas tienen duraciones desiguales ({{stems}}): la reproducción puede desincronizarse.",
+    "quality_note": "La guitarra y el piano se extraen de la mezcla restante, por lo que se separan con menos limpieza que la voz, la batería y el bajo.",
+    "no_web_audio": "Este navegador no admite Web Audio.",
+    "stem": {
+      "vocals": "Voces",
+      "drums": "Batería",
+      "bass": "Bajo",
+      "guitar": "Guitarra",
+      "piano": "Piano",
+      "other": "Otros"
+    }
   }
 }

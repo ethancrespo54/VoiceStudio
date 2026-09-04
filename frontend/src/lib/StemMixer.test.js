@@ -1,7 +1,6 @@
-import { test, describe, beforeEach } from "node:test";
-import assert from "node:assert/strict";
-import { StemMixer } from "../src/StemMixer.js";
-import { FakeAudioContext, sixStems, buffer } from "./fakeAudio.js";
+import { describe, test, expect, beforeEach } from "vitest";
+import { StemMixer } from "./StemMixer.js";
+import { FakeAudioContext, sixStems, buffer } from "../test/fakeAudio.js";
 
 let ctx;
 let mixer;
@@ -16,16 +15,16 @@ describe("sync guarantee", () => {
   test("every stem is scheduled at one shared startAt and offset", () => {
     mixer.play();
     const starts = ctx._scheduled.map((s) => s.started);
-    assert.equal(starts.length, 6, "all six stems scheduled");
+    expect(starts.length).toBe(6);
     const when = new Set(starts.map((s) => s.when));
     const offset = new Set(starts.map((s) => s.offset));
-    assert.equal(when.size, 1, "one startAt across all stems");
-    assert.equal(offset.size, 1, "one offset across all stems");
+    expect(when.size).toBe(1);
+    expect(offset.size).toBe(1);
   });
 
   test("startAt is in the future by exactly the lookahead", () => {
     mixer.play();
-    assert.equal(ctx._scheduled[0].started.when, 10.06);
+    expect(ctx._scheduled[0].started.when).toBe(10.06);
   });
 
   test("seeking re-schedules all stems together at the new offset", () => {
@@ -35,9 +34,9 @@ describe("sync guarantee", () => {
 
     mixer.seek(120);
     const starts = ctx._scheduled.map((s) => s.started);
-    assert.equal(starts.length, 6);
-    assert.equal(new Set(starts.map((s) => s.when)).size, 1);
-    assert.deepEqual([...new Set(starts.map((s) => s.offset))], [120]);
+    expect(starts.length).toBe(6);
+    expect(new Set(starts.map((s) => s.when)).size).toBe(1);
+    expect([...new Set(starts.map((s) => s.offset))]).toEqual([120]);
   });
 
   test("a spent source is never restarted", () => {
@@ -45,9 +44,9 @@ describe("sync guarantee", () => {
     const first = ctx._scheduled[0];
     mixer.seek(30);
     // seek() must have built fresh nodes, not reused the old one.
-    assert.equal(first._startCount, 1);
-    assert.equal(ctx._scheduled.length, 12);
-    assert.notEqual(ctx._scheduled[6], first);
+    expect(first._startCount).toBe(1);
+    expect(ctx._scheduled.length).toBe(12);
+    expect(ctx._scheduled[6]).not.toBe(first);
   });
 });
 
@@ -55,101 +54,101 @@ describe("position", () => {
   test("reads as the offset before the lookahead window elapses", () => {
     mixer.seek(42);
     mixer.play();
-    assert.equal(mixer.position, 42, "still 42 during lookahead");
+    expect(mixer.position).toBe(42);
     ctx.advance(0.03); // half the lookahead
-    assert.equal(mixer.position, 42, "still 42 — playback has not begun");
+    expect(mixer.position).toBe(42);
   });
 
   test("advances with the context clock once playback begins", () => {
     mixer.play();
     ctx.advance(0.06); // reach startAt
-    assert.equal(mixer.position, 0);
+    expect(mixer.position).toBe(0);
     ctx.advance(30);
-    assert.equal(mixer.position, 30);
+    expect(mixer.position).toBe(30);
   });
 
   test("survives pause and resume without drifting", () => {
     mixer.play();
     ctx.advance(0.06 + 30);
     mixer.pause();
-    assert.equal(mixer.position, 30);
+    expect(mixer.position).toBe(30);
 
     ctx.advance(600); // a long pause must not move the playhead
-    assert.equal(mixer.position, 30);
+    expect(mixer.position).toBe(30);
 
     mixer.play();
     ctx.advance(0.06 + 10);
-    assert.equal(mixer.position, 40);
+    expect(mixer.position).toBe(40);
   });
 
   test("clamps at duration rather than running past the end", () => {
     mixer.play();
     ctx.advance(0.06 + 5000);
-    assert.equal(mixer.position, 210);
+    expect(mixer.position).toBe(210);
   });
 
   test("seek clamps to the track bounds", () => {
     mixer.seek(-50);
-    assert.equal(mixer.position, 0);
+    expect(mixer.position).toBe(0);
     mixer.seek(99999);
-    assert.equal(mixer.position, 210);
+    expect(mixer.position).toBe(210);
   });
 });
 
 describe("gain resolution", () => {
   test("fader passes through when nothing is muted or soloed", () => {
     mixer.setFader("vocals", 0.5);
-    assert.equal(mixer.effectiveGain("vocals"), 0.5);
-    assert.equal(mixer.effectiveGain("drums"), 1);
+    expect(mixer.effectiveGain("vocals")).toBe(0.5);
+    expect(mixer.effectiveGain("drums")).toBe(1);
   });
 
   test("mute beats a raised fader", () => {
     mixer.setFader("vocals", 1);
     mixer.setMute("vocals", true);
-    assert.equal(mixer.effectiveGain("vocals"), 0);
+    expect(mixer.effectiveGain("vocals")).toBe(0);
   });
 
   test("a solo silences every stem not soloed", () => {
     mixer.setSolo("vocals", true);
-    assert.equal(mixer.effectiveGain("vocals"), 1);
+    expect(mixer.effectiveGain("vocals")).toBe(1);
     for (const name of ["drums", "bass", "guitar", "piano", "other"]) {
-      assert.equal(mixer.effectiveGain(name), 0, `${name} silenced by solo`);
+      expect(mixer.effectiveGain(name)).toBe(0);
     }
   });
 
   test("mute still beats solo on the same stem", () => {
     mixer.setSolo("vocals", true);
     mixer.setMute("vocals", true);
-    assert.equal(mixer.effectiveGain("vocals"), 0);
+    expect(mixer.effectiveGain("vocals")).toBe(0);
   });
 
   test("multiple solos are additive", () => {
     mixer.setSolo("vocals", true);
     mixer.setSolo("drums", true);
-    assert.equal(mixer.effectiveGain("vocals"), 1);
-    assert.equal(mixer.effectiveGain("drums"), 1);
-    assert.equal(mixer.effectiveGain("bass"), 0);
+    expect(mixer.effectiveGain("vocals")).toBe(1);
+    expect(mixer.effectiveGain("drums")).toBe(1);
+    expect(mixer.effectiveGain("bass")).toBe(0);
   });
 
   test("clearing the last solo restores everyone", () => {
     mixer.setSolo("vocals", true);
-    assert.equal(mixer.effectiveGain("bass"), 0);
+    expect(mixer.effectiveGain("bass")).toBe(0);
     mixer.setSolo("vocals", false);
-    assert.equal(mixer.effectiveGain("bass"), 1);
-    assert.equal(mixer.anySolo, false);
+    expect(mixer.effectiveGain("bass")).toBe(1);
+    expect(mixer.anySolo).toBe(false);
   });
 
   test("soloed stems keep their own fader position", () => {
     mixer.setFader("vocals", 0.25);
     mixer.setSolo("vocals", true);
-    assert.equal(mixer.effectiveGain("vocals"), 0.25);
+    expect(mixer.effectiveGain("vocals")).toBe(0.25);
   });
 
   test("fader input is clamped to 0..1", () => {
     mixer.setFader("vocals", 5);
-    assert.equal(mixer.effectiveGain("vocals"), 1);
+    expect(mixer.effectiveGain("vocals")).toBe(1);
     mixer.setFader("vocals", -3);
-    assert.equal(mixer.effectiveGain("vocals"), 0);
+    expect(mixer.effectiveGain("vocals")).toBe(0);
   });
 });
 
@@ -159,14 +158,14 @@ describe("gain is ramped, not stepped", () => {
     mixer.setFader("vocals", 0.3);
 
     const moved = mixer.stems.get("vocals").gain.gain.calls;
-    assert.equal(moved.length, 1);
-    assert.equal(moved[0].type, "setTargetAtTime", "ramped, not stepped");
-    assert.equal(moved[0].value, 0.3);
+    expect(moved.length).toBe(1);
+    expect(moved[0].type).toBe("setTargetAtTime");
+    expect(moved[0].value).toBe(0.3);
 
     // Every stem is reconciled on each change, because a solo elsewhere can
     // change a stem's effective gain without its own fader moving.
     for (const [name, stem] of mixer.stems) {
-      assert.equal(stem.gain.gain.calls.length, 1, `${name} reconciled once`);
+      expect(stem.gain.gain.calls.length, `${name} reconciled once`).toBe(1);
     }
   });
 
@@ -174,7 +173,7 @@ describe("gain is ramped, not stepped", () => {
     const fresh = new StemMixer(new FakeAudioContext(0));
     fresh.load(sixStems(10));
     const calls = fresh.stems.get("vocals").gain.gain.calls;
-    assert.equal(calls.at(-1).type, "setValueAtTime");
+    expect(calls.at(-1).type).toBe("setValueAtTime");
   });
 });
 
@@ -182,26 +181,26 @@ describe("transport state machine", () => {
   test("play is idempotent — no double scheduling", () => {
     mixer.play();
     mixer.play();
-    assert.equal(ctx._scheduled.length, 6);
+    expect(ctx._scheduled.length).toBe(6);
   });
 
   test("pause on a stopped mixer is a no-op", () => {
-    assert.doesNotThrow(() => mixer.pause());
-    assert.equal(mixer.playing, false);
+    expect(() => mixer.pause()).not.toThrow();
+    expect(mixer.playing).toBe(false);
   });
 
   test("stop rewinds to zero", () => {
     mixer.play();
     ctx.advance(0.06 + 60);
     mixer.stop();
-    assert.equal(mixer.playing, false);
-    assert.equal(mixer.position, 0);
+    expect(mixer.playing).toBe(false);
+    expect(mixer.position).toBe(0);
   });
 
   test("playing from the end restarts at zero", () => {
     mixer.seek(210);
     mixer.play();
-    assert.equal(ctx._scheduled[0].started.offset, 0);
+    expect(ctx._scheduled[0].started.offset).toBe(0);
   });
 
   test("stopped sources are disconnected", () => {
@@ -209,8 +208,8 @@ describe("transport state machine", () => {
     const sources = [...ctx._scheduled];
     mixer.pause();
     for (const s of sources) {
-      assert.notEqual(s.stopped, null, "stop() called");
-      assert.equal(s.connectedTo, null, "disconnected");
+      expect(s.stopped).not.toBe(null);
+      expect(s.connectedTo).toBe(null);
     }
   });
 });
@@ -221,9 +220,9 @@ describe("natural end", () => {
     mixer.on("ended", () => count++);
     mixer.play();
     for (const s of ctx._scheduled) if (s.onended) s.onended();
-    assert.equal(count, 1);
-    assert.equal(mixer.playing, false);
-    assert.equal(mixer.position, 210);
+    expect(count).toBe(1);
+    expect(mixer.playing).toBe(false);
+    expect(mixer.position).toBe(210);
   });
 
   test("does not fire when the stop was intentional", () => {
@@ -231,7 +230,7 @@ describe("natural end", () => {
     mixer.on("ended", () => (fired = true));
     mixer.play();
     mixer.pause();
-    assert.equal(fired, false);
+    expect(fired).toBe(false);
   });
 });
 
@@ -239,35 +238,35 @@ describe("uneven stem lengths", () => {
   test("duration is the longest stem", () => {
     const m = new StemMixer(new FakeAudioContext(0));
     m.load({ vocals: buffer(200), drums: buffer(210.5), bass: buffer(199) });
-    assert.equal(m.duration, 210.5);
+    expect(m.duration).toBe(210.5);
   });
 
   test("mismatches are reported so the UI can warn", () => {
     const m = new StemMixer(new FakeAudioContext(0));
     m.load({ vocals: buffer(210), drums: buffer(210), bass: buffer(207) });
     const bad = m.lengthMismatches();
-    assert.equal(bad.length, 1);
-    assert.equal(bad[0].name, "bass");
-    assert.ok(Math.abs(bad[0].delta - 3) < 1e-9);
+    expect(bad.length).toBe(1);
+    expect(bad[0].name).toBe("bass");
+    expect(Math.abs(bad[0].delta - 3) < 1e-9).toBeTruthy();
   });
 
   test("equal-length stems report no mismatch", () => {
-    assert.deepEqual(mixer.lengthMismatches(), []);
+    expect(mixer.lengthMismatches()).toEqual([]);
   });
 });
 
 describe("errors and edges", () => {
   test("unknown stem names throw rather than silently no-op", () => {
-    assert.throws(() => mixer.setFader("theremin", 0.5), /Unknown stem/);
-    assert.throws(() => mixer.setMute("theremin", true), /Unknown stem/);
+    expect(() => mixer.setFader("theremin", 0.5)).toThrow(/Unknown stem/);
+    expect(() => mixer.setMute("theremin", true)).toThrow(/Unknown stem/);
   });
 
   test("load with no stems throws", () => {
-    assert.throws(() => mixer.load({}), /at least one stem/);
+    expect(() => mixer.load({})).toThrow(/at least one stem/);
   });
 
   test("constructing without a context throws", () => {
-    assert.throws(() => new StemMixer(null), /requires an AudioContext/);
+    expect(() => new StemMixer(null)).toThrow(/requires an AudioContext/);
   });
 
   test("a throwing listener does not corrupt transport state", () => {
@@ -275,17 +274,17 @@ describe("errors and edges", () => {
       throw new Error("listener blew up");
     });
     mixer.play();
-    assert.equal(mixer.playing, true, "still transitioned to playing");
+    expect(mixer.playing).toBe(true);
   });
 
   test("reload replaces the previous set and rewinds", () => {
     mixer.play();
     ctx.advance(0.06 + 30);
     mixer.load({ vocals: buffer(60), drums: buffer(60) });
-    assert.equal(mixer.stems.size, 2);
-    assert.equal(mixer.duration, 60);
-    assert.equal(mixer.position, 0);
-    assert.equal(mixer.playing, false);
+    expect(mixer.stems.size).toBe(2);
+    expect(mixer.duration).toBe(60);
+    expect(mixer.position).toBe(0);
+    expect(mixer.playing).toBe(false);
   });
 });
 
@@ -294,10 +293,10 @@ describe("state snapshot", () => {
     mixer.setFader("vocals", 0.4);
     mixer.setSolo("drums", true);
     const s = mixer.state();
-    assert.equal(s.anySolo, true);
-    assert.equal(s.stems.vocals.fader, 0.4);
-    assert.equal(s.stems.vocals.effective, 0, "silenced by the drums solo");
-    assert.equal(s.stems.drums.effective, 1);
-    assert.equal(s.duration, 210);
+    expect(s.anySolo).toBe(true);
+    expect(s.stems.vocals.fader).toBe(0.4);
+    expect(s.stems.vocals.effective).toBe(0);
+    expect(s.stems.drums.effective).toBe(1);
+    expect(s.duration).toBe(210);
   });
 });

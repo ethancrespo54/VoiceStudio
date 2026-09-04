@@ -2732,5 +2732,37 @@
     "transcript": "Nội dung nghe được",
     "result_kicker": "Bản thu đã chuyển đổi",
     "need_source_and_voice": "Hãy thêm clip nguồn và chọn giọng đích trước."
+  },
+  "stems": {
+    "title": "Bàn trộn stem",
+    "source_title": "Bản gốc",
+    "source_hint": "Chọn một tệp âm thanh trên máy để tách thành sáu bè nhạc cụ.",
+    "choose_file": "Chọn tệp",
+    "separating": "Đang tách… {{percent}}%",
+    "separating_note": "Việc tách chạy trên máy này và có thể mất vài phút.",
+    "separation_failed": "Tách không thành công",
+    "desk_title": "Hòa âm",
+    "desk_hint": "Chỉnh từng nhạc cụ riêng. Solo tách riêng một bè, tắt tiếng làm nó im.",
+    "play": "Phát",
+    "pause": "Tạm dừng",
+    "stop": "Dừng",
+    "seek": "Tua",
+    "clear_solo": "Bỏ solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Tắt tiếng {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Mức của {{stem}}",
+    "uneven_warning": "Các bè có độ dài không đều ({{stems}}) — phát lại có thể lệch nhau.",
+    "quality_note": "Guitar và piano được tách ra từ phần hòa âm còn lại nên không sạch bằng giọng hát, trống và bass.",
+    "no_web_audio": "Trình duyệt này không hỗ trợ Web Audio.",
+    "stem": {
+      "vocals": "Giọng hát",
+      "drums": "Trống",
+      "bass": "Bass",
+      "guitar": "Guitar",
+      "piano": "Piano",
+      "other": "Khác"
+    }
   }
 }

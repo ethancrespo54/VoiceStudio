@@ -2732,5 +2732,37 @@
     "transcript": "Yang terdengar",
     "result_kicker": "Hasil konversi",
     "need_source_and_voice": "Tambahkan klip sumber dan pilih suara target terlebih dahulu."
+  },
+  "stems": {
+    "title": "Meja Stem",
+    "source_title": "Trek sumber",
+    "source_hint": "Pilih berkas audio lokal untuk dipisah menjadi enam trek instrumen.",
+    "choose_file": "Pilih berkas",
+    "separating": "Memisahkan… {{percent}}%",
+    "separating_note": "Pemisahan berjalan di komputer ini dan bisa memakan waktu beberapa menit.",
+    "separation_failed": "Pemisahan gagal",
+    "desk_title": "Mix",
+    "desk_hint": "Atur setiap instrumen sendiri-sendiri. Solo mengisolasi trek; bisu mematikannya.",
+    "play": "Putar",
+    "pause": "Jeda",
+    "stop": "Hentikan",
+    "seek": "Geser",
+    "clear_solo": "Hapus solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Bisukan {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Level {{stem}}",
+    "uneven_warning": "Panjang trek tidak sama ({{stems}}) — pemutaran bisa bergeser.",
+    "quality_note": "Gitar dan piano dipisahkan dari sisa mix, sehingga hasilnya tidak sebersih vokal, drum, dan bas.",
+    "no_web_audio": "Peramban ini tidak mendukung Web Audio.",
+    "stem": {
+      "vocals": "Vokal",
+      "drums": "Drum",
+      "bass": "Bas",
+      "guitar": "Gitar",
+      "piano": "Piano",
+      "other": "Lainnya"
+    }
   }
 }

@@ -2732,5 +2732,37 @@
     "transcript": "Cosa è stato sentito",
     "result_kicker": "Take convertito",
     "need_source_and_voice": "Aggiungi prima un clip sorgente e scegli una voce di destinazione."
+  },
+  "stems": {
+    "title": "Banco stem",
+    "source_title": "Traccia sorgente",
+    "source_hint": "Scegli un file audio locale da dividere in sei tracce strumentali.",
+    "choose_file": "Scegli file",
+    "separating": "Separazione… {{percent}} %",
+    "separating_note": "La separazione viene eseguita su questo computer e può richiedere diversi minuti.",
+    "separation_failed": "Separazione non riuscita",
+    "desk_title": "Mix",
+    "desk_hint": "Regola ogni strumento singolarmente. Solo isola una traccia, Muto la silenzia.",
+    "play": "Riproduci",
+    "pause": "Pausa",
+    "stop": "Ferma",
+    "seek": "Cerca",
+    "clear_solo": "Annulla solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Silenzia {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Livello di {{stem}}",
+    "uneven_warning": "Le tracce hanno durate diverse ({{stems}}): la riproduzione può perdere il sincrono.",
+    "quality_note": "Chitarra e pianoforte vengono estratti dal mix residuo, quindi si separano meno nettamente rispetto a voce, batteria e basso.",
+    "no_web_audio": "Questo browser non supporta Web Audio.",
+    "stem": {
+      "vocals": "Voce",
+      "drums": "Batteria",
+      "bass": "Basso",
+      "guitar": "Chitarra",
+      "piano": "Pianoforte",
+      "other": "Altro"
+    }
   }
 }

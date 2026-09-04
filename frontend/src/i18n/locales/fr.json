@@ -2732,5 +2732,37 @@
     "transcript": "Ce qui a été entendu",
     "result_kicker": "Prise convertie",
     "need_source_and_voice": "Ajoutez d'abord un clip source et choisissez une voix cible."
+  },
+  "stems": {
+    "title": "Table de pistes",
+    "source_title": "Piste source",
+    "source_hint": "Choisissez un fichier audio local à diviser en six pistes d'instruments.",
+    "choose_file": "Choisir un fichier",
+    "separating": "Séparation… {{percent}} %",
+    "separating_note": "La séparation s'exécute sur cette machine et peut prendre plusieurs minutes.",
+    "separation_failed": "Échec de la séparation",
+    "desk_title": "Mixage",
+    "desk_hint": "Réglez chaque instrument séparément. Solo isole une piste, Muet la coupe.",
+    "play": "Lecture",
+    "pause": "Pause",
+    "stop": "Arrêt",
+    "seek": "Naviguer",
+    "clear_solo": "Annuler le solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Couper {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Niveau de {{stem}}",
+    "uneven_warning": "Les pistes ont des durées inégales ({{stems}}) — la lecture peut se désynchroniser.",
+    "quality_note": "La guitare et le piano sont extraits du mixage restant : ils se séparent donc moins proprement que la voix, la batterie et la basse.",
+    "no_web_audio": "Ce navigateur ne prend pas en charge Web Audio.",
+    "stem": {
+      "vocals": "Voix",
+      "drums": "Batterie",
+      "bass": "Basse",
+      "guitar": "Guitare",
+      "piano": "Piano",
+      "other": "Autres"
+    }
   }
 }

@@ -2739,5 +2739,37 @@
     "transcript": "识别到的内容",
     "result_kicker": "转换后的音频",
     "need_source_and_voice": "请先添加源音频并选择目标声音。"
+  },
+  "stems": {
+    "title": "分轨台",
+    "source_title": "源音轨",
+    "source_hint": "选择本地音频文件，拆分为六条乐器分轨。",
+    "choose_file": "选择文件",
+    "separating": "正在分离… {{percent}}%",
+    "separating_note": "分离在本机运行，可能需要几分钟。",
+    "separation_failed": "分离失败",
+    "desk_title": "混音",
+    "desk_hint": "单独调节每件乐器。独奏只保留该轨，静音则将其关闭。",
+    "play": "播放",
+    "pause": "暂停",
+    "stop": "停止",
+    "seek": "定位",
+    "clear_solo": "取消独奏",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "静音 {{stem}}",
+    "solo_stem": "独奏 {{stem}}",
+    "level_for": "{{stem}} 的音量",
+    "uneven_warning": "分轨长度不一致（{{stems}}），播放可能失去同步。",
+    "quality_note": "吉他和钢琴是从剩余混音中拆出的，因此不如人声、鼓和贝斯分离得干净。",
+    "no_web_audio": "此浏览器不支持 Web Audio。",
+    "stem": {
+      "vocals": "人声",
+      "drums": "鼓",
+      "bass": "贝斯",
+      "guitar": "吉他",
+      "piano": "钢琴",
+      "other": "其他"
+    }
   }
 }

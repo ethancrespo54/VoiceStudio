@@ -82,3 +82,17 @@ try {
     },
   });
 }
+
+// jsdom implements no ResizeObserver, but @radix-ui/react-slider measures its
+// thumb with one on mount (via react-use-size). Without this, any test that
+// renders the design system's <Slider> dies with "ResizeObserver is not
+// defined" — thrown from a layout effect, so it surfaces as an uncaught
+// exception that reddens the whole file rather than one assertion. A no-op
+// stub is enough: nothing under test asserts on observed sizes.
+if (typeof globalThis.ResizeObserver === 'undefined') {
+  globalThis.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}

@@ -3233,5 +3233,37 @@
     "transcript": "What it heard",
     "result_kicker": "Converted take",
     "need_source_and_voice": "Add a source clip and pick a target voice first."
+  },
+  "stems": {
+    "title": "Stem Desk",
+    "source_title": "Source track",
+    "source_hint": "Choose a local audio file to split into six instrument stems.",
+    "choose_file": "Choose file",
+    "separating": "Separating… {{percent}}%",
+    "separating_note": "Separation runs on this machine and can take several minutes.",
+    "separation_failed": "Separation failed",
+    "desk_title": "Mix",
+    "desk_hint": "Fade each instrument on its own. Solo isolates a stem; mute silences it.",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "seek": "Seek",
+    "clear_solo": "Clear solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Mute {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Level for {{stem}}",
+    "uneven_warning": "Stems have uneven lengths ({{stems}}) — playback may drift.",
+    "quality_note": "Guitar and piano are split out of the leftover mix, so they separate less cleanly than vocals, drums and bass.",
+    "no_web_audio": "This browser does not support Web Audio.",
+    "stem": {
+      "vocals": "Vocals",
+      "drums": "Drums",
+      "bass": "Bass",
+      "guitar": "Guitar",
+      "piano": "Piano",
+      "other": "Other"
+    }
   }
 }

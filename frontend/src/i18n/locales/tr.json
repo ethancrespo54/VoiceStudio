@@ -2732,5 +2732,37 @@
     "transcript": "Duyulan metin",
     "result_kicker": "Dönüştürülen kayıt",
     "need_source_and_voice": "Önce bir kaynak klip ekleyin ve hedef ses seçin."
+  },
+  "stems": {
+    "title": "Stem Masası",
+    "source_title": "Kaynak parça",
+    "source_hint": "Altı enstrüman kanalına bölmek için yerel bir ses dosyası seçin.",
+    "choose_file": "Dosya seç",
+    "separating": "Ayrıştırılıyor… %{{percent}}",
+    "separating_note": "Ayrıştırma bu bilgisayarda çalışır ve birkaç dakika sürebilir.",
+    "separation_failed": "Ayrıştırma başarısız",
+    "desk_title": "Miks",
+    "desk_hint": "Her enstrümanı ayrı ayrı ayarlayın. Solo bir kanalı yalıtır, sustur onu susturur.",
+    "play": "Oynat",
+    "pause": "Duraklat",
+    "stop": "Durdur",
+    "seek": "Sar",
+    "clear_solo": "Soloyu kaldır",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "{{stem}} sustur",
+    "solo_stem": "{{stem}} solo",
+    "level_for": "{{stem}} seviyesi",
+    "uneven_warning": "Kanalların uzunlukları eşit değil ({{stems}}) — oynatma kayabilir.",
+    "quality_note": "Gitar ve piyano kalan miksten ayrıldığı için vokal, davul ve bas kadar temiz ayrışmaz.",
+    "no_web_audio": "Bu tarayıcı Web Audio desteklemiyor.",
+    "stem": {
+      "vocals": "Vokal",
+      "drums": "Davul",
+      "bass": "Bas",
+      "guitar": "Gitar",
+      "piano": "Piyano",
+      "other": "Diğer"
+    }
   }
 }

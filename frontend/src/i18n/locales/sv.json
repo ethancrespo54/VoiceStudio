@@ -2732,5 +2732,37 @@
     "transcript": "Vad som hördes",
     "result_kicker": "Konverterad tagning",
     "need_source_and_voice": "Lägg först till ett källklipp och välj en målröst."
+  },
+  "stems": {
+    "title": "Stem-bord",
+    "source_title": "Källspår",
+    "source_hint": "Välj en lokal ljudfil att dela upp i sex instrumentspår.",
+    "choose_file": "Välj fil",
+    "separating": "Separerar… {{percent}} %",
+    "separating_note": "Separationen körs på den här datorn och kan ta flera minuter.",
+    "separation_failed": "Separationen misslyckades",
+    "desk_title": "Mix",
+    "desk_hint": "Justera varje instrument för sig. Solo isolerar ett spår, mute tystar det.",
+    "play": "Spela",
+    "pause": "Paus",
+    "stop": "Stoppa",
+    "seek": "Sök",
+    "clear_solo": "Rensa solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Tysta {{stem}}",
+    "solo_stem": "Solo för {{stem}}",
+    "level_for": "Nivå för {{stem}}",
+    "uneven_warning": "Spåren har olika längd ({{stems}}) — uppspelningen kan glida isär.",
+    "quality_note": "Gitarr och piano plockas ur den återstående mixen och separeras därför mindre rent än sång, trummor och bas.",
+    "no_web_audio": "Den här webbläsaren stöder inte Web Audio.",
+    "stem": {
+      "vocals": "Sång",
+      "drums": "Trummor",
+      "bass": "Bas",
+      "guitar": "Gitarr",
+      "piano": "Piano",
+      "other": "Övrigt"
+    }
   }
 }

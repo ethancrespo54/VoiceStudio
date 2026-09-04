@@ -2732,5 +2732,37 @@
     "transcript": "聞き取った内容",
     "result_kicker": "変換されたテイク",
     "need_source_and_voice": "先にソースクリップを追加し、変換先の声を選んでください。"
+  },
+  "stems": {
+    "title": "ステムデスク",
+    "source_title": "元のトラック",
+    "source_hint": "6 つの楽器ステムに分離するローカル音声ファイルを選びます。",
+    "choose_file": "ファイルを選択",
+    "separating": "分離中… {{percent}}%",
+    "separating_note": "分離はこの端末で実行され、数分かかることがあります。",
+    "separation_failed": "分離に失敗しました",
+    "desk_title": "ミックス",
+    "desk_hint": "楽器ごとに音量を調整します。ソロは 1 本だけ残し、ミュートは消します。",
+    "play": "再生",
+    "pause": "一時停止",
+    "stop": "停止",
+    "seek": "シーク",
+    "clear_solo": "ソロを解除",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "{{stem}} をミュート",
+    "solo_stem": "{{stem}} をソロ",
+    "level_for": "{{stem}} のレベル",
+    "uneven_warning": "ステムの長さが揃っていません（{{stems}}）。再生がずれる可能性があります。",
+    "quality_note": "ギターとピアノは残りのミックスから切り出すため、ボーカル・ドラム・ベースほどきれいには分離されません。",
+    "no_web_audio": "このブラウザーは Web Audio に対応していません。",
+    "stem": {
+      "vocals": "ボーカル",
+      "drums": "ドラム",
+      "bass": "ベース",
+      "guitar": "ギター",
+      "piano": "ピアノ",
+      "other": "その他"
+    }
   }
 }
