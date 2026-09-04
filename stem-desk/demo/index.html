@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StemMixer dev harness</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #131518; --surface: #1C1F24; --sunk: #0E1013;
+    --ink: #E5E8EC; --soft: #98A1AD; --rule: #2F343C;
+    --amber: #E8A33D; --teal: #52BDD6; --clip: #E67466;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.55 system-ui, -apple-system, sans-serif;
+    padding: 28px 24px 60px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.15rem; margin: 0 0 4px; letter-spacing: -.01em; }
+  .sub { color: var(--soft); margin: 0 0 24px; font-size: .9rem; }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    padding: 14px; background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 4px; margin-bottom: 8px;
+  }
+  button {
+    font: inherit; font-weight: 500; color: var(--ink); background: var(--sunk);
+    border: 1px solid var(--rule); border-radius: 3px; padding: 7px 14px; cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--amber); }
+  button:disabled { opacity: .4; cursor: default; }
+  button.primary { background: var(--amber); color: #16191D; border-color: var(--amber); }
+  input[type=file] { font: inherit; color: var(--soft); max-width: 100%; }
+  .clock { font-family: var(--mono); font-size: .9rem; color: var(--soft); margin-left: auto; }
+  .clock b { color: var(--ink); font-weight: 500; }
+  #scrub { width: 100%; margin: 12px 0 20px; accent-color: var(--amber); }
+
+  .strips { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .strip { display: grid; grid-template-columns: 92px 64px 1fr 52px; gap: 14px; align-items: center;
+           padding: 12px 14px; background: var(--surface); }
+  .name { font-weight: 600; text-transform: capitalize; }
+  .btns { display: flex; gap: 5px; }
+  .btns button { padding: 4px 8px; font-size: 11px; font-family: var(--mono); letter-spacing: .04em; }
+  .btns button.on-m { background: var(--clip); border-color: var(--clip); color: #16191D; }
+  .btns button.on-s { background: var(--teal); border-color: var(--teal); color: #16191D; }
+  input[type=range] { width: 100%; accent-color: var(--amber); }
+  .val { font-family: var(--mono); font-size: .82rem; color: var(--soft); text-align: right; font-variant-numeric: tabular-nums; }
+  .strip.silent .name, .strip.silent .val { color: #5B636E; }
+  .log { font-family: var(--mono); font-size: 11px; color: var(--soft); margin-top: 20px; white-space: pre-wrap;
+         background: var(--sunk); border: 1px solid var(--rule); border-radius: 4px; padding: 12px; min-height: 60px; max-height: 200px; overflow: auto; }
+  .warn { color: var(--clip); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>StemMixer dev harness</h1>
+  <p class="sub">Drives the real Web Audio graph. Load stem files, or synthesize four test tones to verify sync by ear — if the engine drifts, the tones phase against each other within a minute.</p>
+
+  <div class="bar">
+    <input type="file" id="files" multiple accept="audio/*">
+    <button id="tones">Synthesize test tones</button>
+  </div>
+  <div class="bar">
+    <button id="play" class="primary" disabled>Play</button>
+    <button id="stop" disabled>Stop</button>
+    <span class="clock"><b id="pos">0:00.00</b> / <span id="dur">0:00.00</span></span>
+  </div>
+
+  <input type="range" id="scrub" min="0" max="1000" value="0" step="1" disabled>
+
+  <div class="strips" id="strips"></div>
+  <div class="log" id="log">Ready.</div>
+</div>
+
+<script type="module">
+import { StemMixer } from "../src/StemMixer.js";
+
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const mixer = new StemMixer(ctx);
+const $ = (id) => document.getElementById(id);
+const log = (msg, warn) => {
+  const el = $("log");
+  el.innerHTML = `<span class="${warn ? "warn" : ""}">${msg}</span>\n` + el.innerHTML;
+};
+
+const fmt = (s) => {
+  if (!isFinite(s)) return "0:00.00";
+  const m = Math.floor(s / 60);
+  const r = (s % 60).toFixed(2).padStart(5, "0");
+  return `${m}:${r}`;
+};
+
+function renderStrips() {
+  const state = mixer.state();
+  const strips = $("strips");
+  strips.innerHTML = "";
+  for (const [name, s] of Object.entries(state.stems)) {
+    const row = document.createElement("div");
+    row.className = "strip" + (s.effective === 0 ? " silent" : "");
+    row.innerHTML = `
+      <div class="name">${name}</div>
+      <div class="btns">
+        <button data-act="mute" data-name="${name}" class="${s.mute ? "on-m" : ""}">M</button>
+        <button data-act="solo" data-name="${name}" class="${s.solo ? "on-s" : ""}">S</button>
+      </div>
+      <input type="range" min="0" max="1" step="0.01" value="${s.fader}" data-name="${name}">
+      <div class="val">${Math.round(s.effective * 100)}%</div>`;
+    strips.appendChild(row);
+  }
+}
+
+$("strips").addEventListener("input", (e) => {
+  const name = e.target.dataset.name;
+  if (name && e.target.type === "range") {
+    mixer.setFader(name, parseFloat(e.target.value));
+    renderStrips();
+  }
+});
+
+$("strips").addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  const { act, name } = btn.dataset;
+  if (act === "mute") mixer.toggleMute(name);
+  if (act === "solo") mixer.toggleSolo(name);
+  renderStrips();
+});
+
+function ready(label) {
+  const mismatches = mixer.lengthMismatches(0.05);
+  if (mismatches.length) {
+    log(`WARNING — uneven stem lengths, sync is at risk: ${mismatches
+      .map((m) => `${m.name} is ${m.delta.toFixed(3)}s short`).join(", ")}`, true);
+  }
+  $("dur").textContent = fmt(mixer.duration);
+  $("play").disabled = $("stop").disabled = $("scrub").disabled = false;
+  renderStrips();
+  log(`${label} — ${mixer.stems.size} stems, ${fmt(mixer.duration)}`);
+}
+
+$("files").addEventListener("change", async (e) => {
+  const files = [...e.target.files];
+  if (!files.length) return;
+  log(`Decoding ${files.length} file(s)…`);
+  const buffers = {};
+  for (const f of files) {
+    const name = f.name.replace(/\.[^.]+$/, "").toLowerCase();
+    try {
+      buffers[name] = await ctx.decodeAudioData(await f.arrayBuffer());
+    } catch (err) {
+      log(`Could not decode ${f.name}: ${err.message}`, true);
+    }
+  }
+  if (!Object.keys(buffers).length) return;
+  mixer.load(buffers);
+  ready("Loaded");
+});
+
+$("tones").addEventListener("click", () => {
+  // Four detuned tones. Sustained and harmonically related, so any drift
+  // between stems is immediately audible as phasing.
+  const dur = 60, sr = ctx.sampleRate;
+  const specs = { bass: 110, guitar: 220, piano: 330, vocals: 440 };
+  const buffers = {};
+  for (const [name, hz] of Object.entries(specs)) {
+    const buf = ctx.createBuffer(2, dur * sr, sr);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < d.length; i++) {
+        // Pulse every second gives a transient to check alignment against.
+        const t = i / sr;
+        const env = (t % 1) < 0.12 ? 1 : 0.25;
+        d[i] = Math.sin(2 * Math.PI * hz * t) * 0.18 * env;
+      }
+    }
+    buffers[name] = buf;
+  }
+  mixer.load(buffers);
+  ready("Test tones");
+});
+
+$("play").addEventListener("click", async () => {
+  if (ctx.state === "suspended") await ctx.resume();
+  if (mixer.playing) { mixer.pause(); } else { mixer.play(); }
+  $("play").textContent = mixer.playing ? "Pause" : "Play";
+});
+
+$("stop").addEventListener("click", () => {
+  mixer.stop();
+  $("play").textContent = "Play";
+});
+
+let scrubbing = false;
+$("scrub").addEventListener("pointerdown", () => (scrubbing = true));
+$("scrub").addEventListener("change", (e) => {
+  mixer.seek((e.target.value / 1000) * mixer.duration);
+  scrubbing = false;
+});
+
+mixer.on("ended", () => {
+  $("play").textContent = "Play";
+  log("Reached the end.");
+});
+
+(function tick() {
+  const p = mixer.position;
+  $("pos").textContent = fmt(p);
+  if (!scrubbing && mixer.duration) {
+    $("scrub").value = Math.round((p / mixer.duration) * 1000);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

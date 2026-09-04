@@ -1,0 +1,17 @@
+{
+  "name": "stem-desk-mixer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Synchronized multi-stem playback engine on the Web Audio API",
+  "main": "src/StemMixer.js",
+  "scripts": {
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "test:browser": "node test/browser-smoke.mjs",
+    "test:all": "npm test && npm run test:browser",
+    "demo": "node -e \"const{createServer}=require('http'),{readFileSync}=require('fs'),{join,extname}=require('path');createServer((q,s)=>{try{const p=join(__dirname,q.url==='/'?'demo/index.html':q.url);s.writeHead(200,{'content-type':{'.html':'text/html','.js':'text/javascript'}[extname(p)]||'text/plain'});s.end(readFileSync(p))}catch{s.writeHead(404).end()}}).listen(8080,()=>console.log('http://localhost:8080/demo/index.html'))\""
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
