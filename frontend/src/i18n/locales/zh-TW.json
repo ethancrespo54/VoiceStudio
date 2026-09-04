@@ -29,7 +29,8 @@
     "flip_rail": "翻轉導軌側",
     "voice": "語音",
     "audiobook": "有聲書",
-    "workspaces": "工作區"
+    "workspaces": "工作區",
+    "stems": "分軌"
   },
   "catalogue": {
     "title": "模型庫",
@@ -2732,5 +2733,37 @@
     "transcript": "辨識到的內容",
     "result_kicker": "轉換後的音訊",
     "need_source_and_voice": "請先加入來源音訊並選擇目標聲音。"
+  },
+  "stems": {
+    "title": "分軌台",
+    "source_title": "來源音軌",
+    "source_hint": "選擇本機音訊檔案，拆分成六條樂器分軌。",
+    "choose_file": "選擇檔案",
+    "separating": "正在分離… {{percent}}%",
+    "separating_note": "分離在本機執行，可能需要幾分鐘。",
+    "separation_failed": "分離失敗",
+    "desk_title": "混音",
+    "desk_hint": "單獨調整每件樂器。獨奏只保留該軌，靜音則將其關閉。",
+    "play": "播放",
+    "pause": "暫停",
+    "stop": "停止",
+    "seek": "定位",
+    "clear_solo": "取消獨奏",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "靜音 {{stem}}",
+    "solo_stem": "獨奏 {{stem}}",
+    "level_for": "{{stem}} 的音量",
+    "uneven_warning": "分軌長度不一致（{{stems}}），播放可能失去同步。",
+    "quality_note": "吉他與鋼琴是從剩餘混音中拆出的，因此不如人聲、鼓與貝斯分離得乾淨。",
+    "no_web_audio": "此瀏覽器不支援 Web Audio。",
+    "stem": {
+      "vocals": "人聲",
+      "drums": "鼓",
+      "bass": "貝斯",
+      "guitar": "吉他",
+      "piano": "鋼琴",
+      "other": "其他"
+    }
   }
 }

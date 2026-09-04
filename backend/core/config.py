@@ -48,6 +48,7 @@ DATA_DIR = get_app_data_dir()
 VOICES_DIR = os.path.join(DATA_DIR, "voices")       # Reference audio for profiles
 OUTPUTS_DIR = os.path.join(DATA_DIR, "outputs")      # Generated audio files
 DUB_DIR = os.path.join(DATA_DIR, "dub_jobs")
+STEMS_DIR = os.path.join(DATA_DIR, "stem_jobs")     # Six-stem instrument separations
 DB_PATH = os.path.join(DATA_DIR, "omnivoice.db")
 
 
@@ -69,6 +70,39 @@ def dub_seg_path(job_id, seg_id):
     if full != base and not full.startswith(base + os.sep):
         raise ValueError(f"dub segment path escapes DUB_DIR: {job_id!r}/{seg_id!r}")
     return full
+
+
+def stem_job_dir(job_id):
+    """Per-job directory for a six-stem instrument separation.
+
+    ``job_id`` reaches this from the request, so the result is sanitised
+    (separators stripped) AND verified to stay inside STEMS_DIR via realpath
+    containment — same contract as ``dub_seg_path``, raising ValueError on any
+    attempt to escape.
+    """
+    safe_job = re.sub(r"[^A-Za-z0-9._-]", "_", str(job_id))
+    base = os.path.realpath(STEMS_DIR)
+    full = os.path.realpath(os.path.join(base, safe_job))
+    if full != base and not full.startswith(base + os.sep):
+        raise ValueError(f"stem job path escapes STEMS_DIR: {job_id!r}")
+    return full
+
+
+def stem_file_path(job_id, stem_name):
+    """Path to one stem WAV inside a job directory.
+
+    ``stem_name`` is request-supplied on the download route, so it gets the
+    same sanitise-then-verify treatment as the job id rather than being trusted
+    to be one of the six known names.
+    """
+    safe_stem = re.sub(r"[^A-Za-z0-9._-]", "_", str(stem_name))
+    base = os.path.realpath(stem_job_dir(job_id))
+    full = os.path.realpath(os.path.join(base, f"{safe_stem}.wav"))
+    if not full.startswith(base + os.sep):
+        raise ValueError(f"stem file path escapes its job dir: {job_id!r}/{stem_name!r}")
+    return full
+
+
 PREVIEW_DIR = os.path.join(DATA_DIR, "preview")
 CRASH_LOG_PATH = os.path.join(DATA_DIR, "crash_log.txt")   # only written on unhandled exceptions
 LOG_PATH = os.path.join(DATA_DIR, "omnivoice.log")          # rolling runtime log — what the Settings UI reads
@@ -77,7 +111,7 @@ IDLE_TIMEOUT_SECONDS = int(os.environ.get("OMNIVOICE_IDLE_TIMEOUT", "900"))
 CPU_POOL_WORKERS = int(os.environ.get("OMNIVOICE_CPU_POOL", "0")) or min(8, (os.cpu_count() or 4))
 
 def ensure_dirs():
-    for d in [DATA_DIR, VOICES_DIR, OUTPUTS_DIR, DUB_DIR, PREVIEW_DIR]:
+    for d in [DATA_DIR, VOICES_DIR, OUTPUTS_DIR, DUB_DIR, STEMS_DIR, PREVIEW_DIR]:
         os.makedirs(d, exist_ok=True)
 
 ensure_dirs()

@@ -26,6 +26,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const VoiceProfile = lazy(() => import('./pages/VoiceProfile'));
 const BatchQueue = lazy(() => import('./pages/BatchQueue'));
 const ToolsPage = lazy(() => import('./pages/ToolsPage'));
+const StemDesk = lazy(() => import('./pages/StemDesk'));
 const SetupWizard = lazy(() => import('./pages/SetupWizard'));
 const UiScaleSetup = lazy(() => import('./components/UiScaleSetup'));
 const KeyboardCheatsheet = lazy(() => import('./components/KeyboardCheatsheet'));
@@ -302,6 +303,7 @@ function App() {
     mode === 'donate' ||
     mode === 'batch' ||
     mode === 'tools' ||
+    mode === 'stems' ||
     mode === 'projects' ||
     mode === 'gallery' ||
     mode === 'enterprise' ||
@@ -1484,6 +1486,12 @@ function App() {
           <ErrorBoundary name="tools">
             <Suspense fallback={<LazyFallback />}>
               <ToolsPage onBack={() => setMode('launchpad')} />
+            </Suspense>
+          </ErrorBoundary>
+        ) : mode === 'stems' ? (
+          <ErrorBoundary name="stem-desk">
+            <Suspense fallback={<LazyFallback />}>
+              <StemDesk onBack={() => setMode('launchpad')} />
             </Suspense>
           </ErrorBoundary>
         ) : mode === 'projects' ? (

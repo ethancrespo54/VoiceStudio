@@ -29,7 +29,8 @@
     "flip_rail": "Vire o lado do trilho",
     "voice": "Voz",
     "audiobook": "Audiolivro",
-    "workspaces": "Áreas de trabalho"
+    "workspaces": "Áreas de trabalho",
+    "stems": "Stems"
   },
   "catalogue": {
     "title": "Catálogo de modelos",
@@ -2732,5 +2733,37 @@
     "transcript": "O que foi ouvido",
     "result_kicker": "Take convertido",
     "need_source_and_voice": "Adicione primeiro um clipe de origem e escolha uma voz de destino."
+  },
+  "stems": {
+    "title": "Mesa de stems",
+    "source_title": "Faixa de origem",
+    "source_hint": "Escolha um ficheiro de áudio local para dividir em seis faixas de instrumentos.",
+    "choose_file": "Escolher ficheiro",
+    "separating": "A separar… {{percent}} %",
+    "separating_note": "A separação corre nesta máquina e pode demorar vários minutos.",
+    "separation_failed": "Falha na separação",
+    "desk_title": "Mistura",
+    "desk_hint": "Ajuste cada instrumento individualmente. Solo isola uma faixa; silenciar desliga-a.",
+    "play": "Reproduzir",
+    "pause": "Pausa",
+    "stop": "Parar",
+    "seek": "Procurar",
+    "clear_solo": "Limpar solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Silenciar {{stem}}",
+    "solo_stem": "Solo de {{stem}}",
+    "level_for": "Nível de {{stem}}",
+    "uneven_warning": "As faixas têm durações desiguais ({{stems}}) — a reprodução pode dessincronizar.",
+    "quality_note": "A guitarra e o piano são extraídos da mistura restante, pelo que se separam com menos nitidez do que a voz, a bateria e o baixo.",
+    "no_web_audio": "Este navegador não suporta Web Audio.",
+    "stem": {
+      "vocals": "Voz",
+      "drums": "Bateria",
+      "bass": "Baixo",
+      "guitar": "Guitarra",
+      "piano": "Piano",
+      "other": "Outros"
+    }
   }
 }

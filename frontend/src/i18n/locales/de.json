@@ -29,7 +29,8 @@
     "flip_rail": "Schienenseite umdrehen",
     "voice": "Stimme",
     "audiobook": "Hörbuch",
-    "workspaces": "Arbeitsbereiche"
+    "workspaces": "Arbeitsbereiche",
+    "stems": "Stems"
   },
   "catalogue": {
     "title": "Modellkatalog",
@@ -2732,5 +2733,37 @@
     "transcript": "Erkannter Text",
     "result_kicker": "Konvertierte Aufnahme",
     "need_source_and_voice": "Füge zuerst einen Quellclip hinzu und wähle eine Zielstimme."
+  },
+  "stems": {
+    "title": "Stem-Pult",
+    "source_title": "Quelltitel",
+    "source_hint": "Wähle eine lokale Audiodatei, die in sechs Instrumentenspuren zerlegt wird.",
+    "choose_file": "Datei wählen",
+    "separating": "Trennung läuft… {{percent}} %",
+    "separating_note": "Die Trennung läuft auf diesem Rechner und kann mehrere Minuten dauern.",
+    "separation_failed": "Trennung fehlgeschlagen",
+    "desk_title": "Mischung",
+    "desk_hint": "Blende jedes Instrument einzeln. Solo hebt eine Spur hervor, Mute schaltet sie stumm.",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "stop": "Stopp",
+    "seek": "Suchen",
+    "clear_solo": "Solo aufheben",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "{{stem}} stummschalten",
+    "solo_stem": "{{stem}} solo",
+    "level_for": "Pegel für {{stem}}",
+    "uneven_warning": "Spuren haben ungleiche Längen ({{stems}}) — die Wiedergabe kann auseinanderlaufen.",
+    "quality_note": "Gitarre und Klavier werden aus dem Restmix herausgelöst und trennen sich daher weniger sauber als Gesang, Schlagzeug und Bass.",
+    "no_web_audio": "Dieser Browser unterstützt kein Web Audio.",
+    "stem": {
+      "vocals": "Gesang",
+      "drums": "Schlagzeug",
+      "bass": "Bass",
+      "guitar": "Gitarre",
+      "piano": "Klavier",
+      "other": "Sonstiges"
+    }
   }
 }

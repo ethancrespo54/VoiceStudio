@@ -10,9 +10,14 @@ the frozen-backend fallback mirror it for their toolchains.
 
 **Highlights**
 
+- Take a track apart instrument by instrument: the new Stem Desk separates vocals, drums, bass, guitar and piano onto their own faders (#1)
+
 ### Changed
 
 ### Added
+
+- Stem Desk workspace: six-stem separation via htdemucs_6s with a live mixing desk — fader, mute and solo per instrument (#1)
+- `/stems` endpoints for six-stem separation, streaming progress over SSE (#1)
 
 ### Docs
 

@@ -29,7 +29,8 @@
     "flip_rail": "Draai de railzijde om",
     "voice": "Stem",
     "audiobook": "Audioboek",
-    "workspaces": "Werkruimtes"
+    "workspaces": "Werkruimtes",
+    "stems": "Stems"
   },
   "catalogue": {
     "title": "Modelcatalogus",
@@ -2732,5 +2733,37 @@
     "transcript": "Wat er is gehoord",
     "result_kicker": "Geconverteerde take",
     "need_source_and_voice": "Voeg eerst een bronclip toe en kies een doelstem."
+  },
+  "stems": {
+    "title": "Stem-tafel",
+    "source_title": "Bronnummer",
+    "source_hint": "Kies een lokaal audiobestand om in zes instrumentsporen te splitsen.",
+    "choose_file": "Bestand kiezen",
+    "separating": "Scheiden… {{percent}}%",
+    "separating_note": "Het scheiden draait op deze computer en kan enkele minuten duren.",
+    "separation_failed": "Scheiden mislukt",
+    "desk_title": "Mix",
+    "desk_hint": "Regel elk instrument apart. Solo isoleert een spoor, mute maakt het stil.",
+    "play": "Afspelen",
+    "pause": "Pauze",
+    "stop": "Stoppen",
+    "seek": "Zoeken",
+    "clear_solo": "Solo opheffen",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "{{stem}} dempen",
+    "solo_stem": "{{stem}} solo",
+    "level_for": "Niveau van {{stem}}",
+    "uneven_warning": "Sporen hebben ongelijke lengtes ({{stems}}) — het afspelen kan uit de pas lopen.",
+    "quality_note": "Gitaar en piano worden uit de resterende mix gehaald en scheiden daardoor minder schoon dan zang, drums en bas.",
+    "no_web_audio": "Deze browser ondersteunt geen Web Audio.",
+    "stem": {
+      "vocals": "Zang",
+      "drums": "Drums",
+      "bass": "Bas",
+      "guitar": "Gitaar",
+      "piano": "Piano",
+      "other": "Overig"
+    }
   }
 }

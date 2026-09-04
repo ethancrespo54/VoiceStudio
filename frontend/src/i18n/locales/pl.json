@@ -29,7 +29,8 @@
     "flip_rail": "Odwróć stronę szyny",
     "voice": "Głos",
     "audiobook": "Książka audio",
-    "workspaces": "Obszary robocze"
+    "workspaces": "Obszary robocze",
+    "stems": "Stemy"
   },
   "catalogue": {
     "title": "Katalog modeli",
@@ -2732,5 +2733,37 @@
     "transcript": "Co usłyszano",
     "result_kicker": "Skonwertowane nagranie",
     "need_source_and_voice": "Najpierw dodaj klip źródłowy i wybierz głos docelowy."
+  },
+  "stems": {
+    "title": "Konsola stemów",
+    "source_title": "Ścieżka źródłowa",
+    "source_hint": "Wybierz lokalny plik audio do podziału na sześć ścieżek instrumentów.",
+    "choose_file": "Wybierz plik",
+    "separating": "Rozdzielanie… {{percent}}%",
+    "separating_note": "Rozdzielanie działa na tym komputerze i może potrwać kilka minut.",
+    "separation_failed": "Rozdzielanie nie powiodło się",
+    "desk_title": "Miks",
+    "desk_hint": "Reguluj każdy instrument osobno. Solo izoluje ścieżkę, wyciszenie ją milknie.",
+    "play": "Odtwórz",
+    "pause": "Pauza",
+    "stop": "Zatrzymaj",
+    "seek": "Przewiń",
+    "clear_solo": "Wyłącz solo",
+    "mute_short": "M",
+    "solo_short": "S",
+    "mute_stem": "Wycisz {{stem}}",
+    "solo_stem": "Solo {{stem}}",
+    "level_for": "Poziom {{stem}}",
+    "uneven_warning": "Ścieżki mają różne długości ({{stems}}) — odtwarzanie może się rozjechać.",
+    "quality_note": "Gitara i fortepian są wydzielane z pozostałego miksu, więc rozdzielają się mniej czysto niż wokal, perkusja i bas.",
+    "no_web_audio": "Ta przeglądarka nie obsługuje Web Audio.",
+    "stem": {
+      "vocals": "Wokal",
+      "drums": "Perkusja",
+      "bass": "Bas",
+      "guitar": "Gitara",
+      "piano": "Fortepian",
+      "other": "Inne"
+    }
   }
 }
